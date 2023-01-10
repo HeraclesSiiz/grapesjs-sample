@@ -1,15 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
-
-import Grape from './pages/grape';
+import './static/tabler-icons.css';
+import 'grapesjs/dist/css/grapes.min.css';
+import Builder from './builder/index.jsx';
 
 function App() {
-
-  return (
+  return(
     <div className="App">
-      <header className="App-header">
-        <Grape />
-      </header>
+      <Builder />;
     </div>
   );
 }
