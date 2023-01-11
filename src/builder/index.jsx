@@ -197,7 +197,7 @@ export default function Buidler(props) {
                     blockManager.add('header', {
                         label: 'Header',
                         content: 
-                        `<header>
+                        `<header data-gjs-type='header'>
                             <div class="header">
                             <h1>Header</h1>
                             <p>My supercool header</p>
@@ -237,7 +237,7 @@ export default function Buidler(props) {
                         label: 'Blog',
                         content: 
                         `<div>
-                            <div class="header">
+                            <div class="header" data-gjs-type='blog'>
                             <h2>Blog Name</h2>
                             </div>
                             
@@ -623,19 +623,7 @@ export default function Buidler(props) {
         });
 
         editor.on('component:selected', () => {
-            
             const selected = editor.getSelected();
-            const componentType = selected.get('type');
-            // if(selected.attributes.tagName == "header" || selected.attributes.tagName == "footer"){
-            //     selected.addTrait({
-            //         type: 'checkbox',
-            //         name: 'global',
-            //         label: 'Global',
-            //     }, { at: 2 });
-            // }
-            
-            console.log(selected);
-            console.log(componentType);
             const openBlocksBtn = editor.Panels.getButton('views', 'open-blocks');
             if (selected.attributes.name == "Row" || selected.attributes.name == "Cell") {
                 if(!openBlocksBtn || !openBlocksBtn.get('active')){
@@ -644,41 +632,8 @@ export default function Buidler(props) {
             }
         });
 
-        // editor.DomComponents.addType('form', {
-        //     isComponent: el => el.tagName == 'FORM',
-        //     model: {
-        //         init() {
-        //         },
-        //         defaults: {
-        //             traits: [{
-        //                 type: 'checkbox',
-        //                 name: 'global',
-        //                 label: 'Global',
-        //             }],
-        //         },
-        //     },
-        //     view: {
-        //         init() {
-        //             this.listenTo(this.model, 'change:attributes:global', this.changeGlobal);
-        //         },
-        //         changeGlobal() {
-        //             const component = editor.getSelected();
-        //             const properties = this.model.attributes.attributes;
-        //             const state = properties.global;
-        //             const content = component.toHTML();
-        //             console.log(state,content);
-        //             if(properties.global){
-                        
-        //             }
-        //         },
-        //         onRender() {
-        //         }
-        //     }
-        // });
-
-
-        editor.DomComponents.addType('default', {
-            isComponent: el => el.tagName == 'header',
+        editor.DomComponents.addType('header', {
+            isComponent: el => el.tagName === 'HEADER',
             model: {
                 init() {
                 },
@@ -714,8 +669,8 @@ export default function Buidler(props) {
             }
         });
 
-        editor.DomComponents.addType('default', {
-            isComponent: el => el.tagName == 'footer',
+        editor.DomComponents.addType('blog', {
+            isComponent: el => el.tagName == 'BLOG',
             model: {
                 init() {
                 },
@@ -740,17 +695,11 @@ export default function Buidler(props) {
                     const properties = this.model.attributes.attributes;
                     const state = properties.global;
                     const content = component.toHTML();
-                    console.log(state,content);
-                    if(properties.global){
-                        
-                    }
                 },
                 onRender() {
                 }
             }
         });
-
-        console.log(editor.DomComponents.getTypes());
 
         const undoManager = editor.UndoManager
         undoManager.start();
